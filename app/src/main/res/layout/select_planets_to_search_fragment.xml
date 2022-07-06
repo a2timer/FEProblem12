@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.cartelnetwork.feproblem1.ui.MainViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:fillViewport="true"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txt_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/home"
+                android:textColor="@color/white"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="10dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_home"
+                app:layout_constraintEnd_toStartOf="@+id/txt_home"
+                app:layout_constraintTop_toTopOf="@+id/txt_home" />
+
+
+            <TextView
+                android:id="@+id/txt_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/reset"
+                android:textColor="@color/white"
+
+                app:layout_constraintEnd_toStartOf="@id/view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_falcon_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="@string/finding_falcon"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_select_planet_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/select_planets"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_falcon_title" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:id="@+id/layout_details"
+                android:weightSum="4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_select_planet_title">
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_destination_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#4D000000"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="2dp">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/txt_destination_one"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/destination_one"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="22sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txt_destination_one"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="50dp"
+                                android:layout_weight="0.7">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/appCompatImageView"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:src="@drawable/planet_profile_pic"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                </de.hdodenhof.circleimageview.CircleImageView>
+
+                                <TextView
+                                    android:id="@+id/txt_planet_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="20dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.3">
+
+                                <Spinner
+                                    android:id="@+id/spiner_planet_one"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:backgroundTint="@color/white"
+                                    android:spinnerMode="dropdown"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <RadioGroup
+                                    android:id="@+id/radio_group_destination_one"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:orientation="vertical"
+                                    android:visibility="gone"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/spiner_planet_one">
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_pod"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_pod"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_rocket"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_rocket"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_shuttle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_shuttle"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_ship"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_ship"
+                                        android:textColor="@color/white" />
+                                </RadioGroup>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_destination_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#4D000000"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/txt_destination_two"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/destination_one"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="22sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txt_destination_two"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="50dp"
+                                android:layout_weight="0.7">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/img_planet_two"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:src="@drawable/planet_profile_pic"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                </de.hdodenhof.circleimageview.CircleImageView>
+
+                                <TextView
+                                    android:id="@+id/txt_planet_name_two"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="20dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/img_planet_two" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.3">
+
+                                <Spinner
+                                    android:id="@+id/spiner_planet_two"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:backgroundTint="@color/white"
+                                    android:spinnerMode="dropdown"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <RadioGroup
+                                    android:id="@+id/radio_group_destination_two"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:orientation="vertical"
+                                    android:visibility="gone"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/spiner_planet_two">
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_pod_two"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_pod"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_rocket_two"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_rocket"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_shuttle_two"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_shuttle"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_ship_two"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_ship"
+                                        android:textColor="@color/white" />
+                                </RadioGroup>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_destination_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#4D000000"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/txt_destination_three"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/destination_one"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="22sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txt_destination_three"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="50dp"
+                                android:layout_weight="0.7">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/img_planet_three"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:src="@drawable/planet_profile_pic"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                </de.hdodenhof.circleimageview.CircleImageView>
+
+                                <TextView
+                                    android:id="@+id/txt_planet_name_three"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="20dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/img_planet_three" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.3">
+
+                                <Spinner
+                                    android:id="@+id/spiner_planet_three"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:backgroundTint="@color/white"
+                                    android:spinnerMode="dropdown"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <RadioGroup
+                                    android:id="@+id/radio_group_destination_three"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:orientation="vertical"
+                                    android:visibility="gone"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/spiner_planet_three">
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_pod_three"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_pod"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_rocket_three"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_rocket"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_shuttle_three"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_shuttle"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_ship_three"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_ship"
+                                        android:textColor="@color/white" />
+                                </RadioGroup>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_destination_four"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#4D000000"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/txt_destination_four"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/destination_one"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="22sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txt_destination_four"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="0.7">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/img_planet_four"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:src="@drawable/planet_profile_pic"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                </de.hdodenhof.circleimageview.CircleImageView>
+
+                                <TextView
+                                    android:id="@+id/txt_planet_name_four"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="20dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/img_planet_four" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.3">
+
+                                <Spinner
+                                    android:id="@+id/spiner_planet_four"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:backgroundTint="@color/white"
+                                    android:spinnerMode="dropdown"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <RadioGroup
+                                    android:id="@+id/radio_group_destination_four"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:orientation="vertical"
+                                    android:visibility="gone"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/spiner_planet_four">
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_pod_four"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_pod"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_rocket_four"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_rocket"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_shuttle_four"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_shuttle"
+                                        android:textColor="@color/white" />
+
+                                    <RadioButton
+                                        android:id="@+id/radio_vehicle_space_ship_four"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/white"
+                                        android:text="@string/space_ship"
+                                        android:textColor="@color/white" />
+                                </RadioGroup>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_taken"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/layout_details"
+                android:id="@+id/txt_total_taken_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/btn_find_falcone"
+                android:text="@string/finding_falcon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_total_taken_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

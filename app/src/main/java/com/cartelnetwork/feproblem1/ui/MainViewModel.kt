@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 
 class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
      lateinit var token : String
+
       var planetsDetailsList = MutableLiveData<ArrayList<Planets>>()
      var vehiclesDetailsList = MutableLiveData<ArrayList<Vehicles>>()
     var planetsDetailsListTwo = MutableLiveData<ArrayList<Planets>>()
@@ -29,6 +30,12 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     var destinationThreePlanet = MutableLiveData<Int>()
     var destinationFourPlanet = MutableLiveData<Int>()
     var totalTakenTime = MutableLiveData<Int>()
+
+    var spacePodCount = MutableLiveData<Int>()
+    var spaceRocketCount = MutableLiveData<Int>()
+    var spaceShuttleCount = MutableLiveData<Int>()
+    var spaceShipCount= MutableLiveData<Int>()
+
 
 
     fun getUsers() = liveData(Dispatchers.IO) {

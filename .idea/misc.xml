@@ -4,10 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Projects/FEProblem12/app/src/main/res/drawable/card_border.xml" value="0.33605720122574056" />
+        <entry key="..\:/Projects/FEProblem12/app/src/main/res/drawable/ic_space_pod.xml" value="0.12006578947368421" />
+        <entry key="..\:/Projects/FEProblem12/app/src/main/res/drawable/ic_space_rocketnew_adobe_express.xml" value="0.12006578947368421" />
+        <entry key="..\:/Projects/FEProblem12/app/src/main/res/drawable/ic_space_ship_adobe_express.xml" value="0.21644736842105264" />
+        <entry key="..\:/Projects/FEProblem12/app/src/main/res/drawable/ic_space_shuttle_adobe_express.xml" value="0.21644736842105264" />
+        <entry key="..\:/Projects/FEProblem12/app/src/main/res/layout-land/select_planets_to_search_fragment.xml" value="0.18" />
+        <entry key="..\:/Projects/FEProblem12/app/src/main/res/layout-land/spinner_layout.xml" value="0.25" />
         <entry key="..\:/Projects/FEProblem12/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Projects/FEProblem12/app/src/main/res/layout/finding_falcone_result_fragment.xml" value="0.2269021739130435" />
-        <entry key="..\:/Projects/FEProblem12/app/src/main/res/layout/select_planets_to_search_fragment.xml" value="0.25" />
-        <entry key="..\:/Projects/FEProblem12/app/src/main/res/layout/spinner_layout.xml" value="0.33" />
+        <entry key="..\:/Projects/FEProblem12/app/src/main/res/layout/select_planets_to_search_fragment.xml" value="0.2" />
+        <entry key="..\:/Projects/FEProblem12/app/src/main/res/layout/spinner_layout.xml" value="0.25" />
       </map>
     </option>
   </component>

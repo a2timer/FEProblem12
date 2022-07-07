@@ -103,7 +103,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/time_taken"
+                android:text="@string/planet_found"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/white"
@@ -118,7 +118,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
+                app:layout_constraintVertical_bias="0"
                 android:text="@string/finding_falcon"
+                android:id="@+id/btn_try_again"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

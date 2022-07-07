@@ -5,10 +5,16 @@
     <string name="destination_one">Destination One</string>
     <string name="home">Home</string>
     <string name="reset">Reset</string>
-    <string name="space_pod">Space pod</string>
-    <string name="space_rocket">Space rocket</string>
-    <string name="space_shuttle">Space shuttle</string>
-    <string name="space_ship">Space ship</string>
+    <string name="space_pod">Space pod ( %d )</string>
+    <string name="space_rocket">Space rocket ( %d )</string>
+    <string name="space_shuttle">Space shuttle ( %d )</string>
+    <string name="space_ship">Space ship ( %d )</string>
     <string name="time_taken">Time taken :</string>
     <string name="success">Success! Congratulation on Finding Falcone. King Shan is mighty pleased.</string>
+    <string name="failed">Failure! on Finding Falcone. King Shan is mighty Disappointed.</string>
+    <string name="planet_found">Planet found :</string>
+    <string name="try_again">Try Again</string>
+    <string name="destination_four">Destination Four</string>
+    <string name="destination_three">Destination Three</string>
+    <string name="destination_two">Destination Two</string>
 </resources>

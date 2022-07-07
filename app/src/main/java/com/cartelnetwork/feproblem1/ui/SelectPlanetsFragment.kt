@@ -23,6 +23,10 @@ import com.cartelnetwork.feproblem1.model.Vehicles
 import com.cartelnetwork.feproblem1.utils.Status
 import android.widget.RadioButton
 import com.cartelnetwork.feproblem1.model.FindRequestBody
+import com.cartelnetwork.feproblem1.utils.replaceFragment
+import android.os.Build
+import androidx.fragment.app.FragmentTransaction
+import com.cartelnetwork.feproblem1.utils.Utils
 
 
 class SelectPlanetsFragment : Fragment() {
@@ -33,14 +37,14 @@ class SelectPlanetsFragment : Fragment() {
     var spinnerListTwo: ArrayList<SpinnerItem> = ArrayList()
     var spinnerListThree: ArrayList<SpinnerItem> = ArrayList()
     var spinnerListFour: ArrayList<SpinnerItem> = ArrayList()
-    lateinit var destinationOnePlanetDetails : Planets
-    lateinit var destinationOneVehicleDetails : Vehicles
-    lateinit var destinationTwoPlanetDetails : Planets
-    lateinit var destinationTwoVehicleDetails : Vehicles
-    lateinit var destinationThreePlanetDetails : Planets
-    lateinit var destinationThreeVehicleDetails : Vehicles
-    lateinit var destinationFourPlanetDetails : Planets
-    lateinit var destinationFourVehicleDetails : Vehicles
+    lateinit var destinationOnePlanetDetails: Planets
+    lateinit var destinationOneVehicleDetails: Vehicles
+    lateinit var destinationTwoPlanetDetails: Planets
+    lateinit var destinationTwoVehicleDetails: Vehicles
+    lateinit var destinationThreePlanetDetails: Planets
+    lateinit var destinationThreeVehicleDetails: Vehicles
+    lateinit var destinationFourPlanetDetails: Planets
+    lateinit var destinationFourVehicleDetails: Vehicles
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,11 +67,18 @@ class SelectPlanetsFragment : Fragment() {
 
 
         binder.viewModel = viewModel
+        binder.handler = this
+        if (savedInstanceState != null) {
+            Log.d("TAG", " " + savedInstanceState.getInt("spinner1"))
+            binder.spinerPlanetOne.setSelection(savedInstanceState.getInt("spinner1"))
+        }
 
-        initialDetails()
+        if (viewModel.planetsDetailsList.value == null || viewModel.planetsDetailsList.value!!.size == 0)
+            initialDetails()
 
         viewModel.planetsDetailsList.observe(viewLifecycleOwner, Observer {
             if (it.size > 0) {
+
 
                 for (value in it) {
                     Log.d("TAG", "" + value.name)
@@ -80,14 +91,92 @@ class SelectPlanetsFragment : Fragment() {
 
                 updateAdpter()
             }
+
         })
 
+
         binder.txtTotalTakenTitle.append("0")
+
+        updateRadioBtn()
 
         spinnerItemSelect()
         radioGroupCheck()
         findFalconeCheck()
         return binder.root
+    }
+
+    private fun updateRadioBtn() {
+        viewModel.spacePodCount.observe(viewLifecycleOwner, Observer {
+            if(it>0){
+                binder.radioVehicleSpacePod.text = resources.getString(R.string.space_pod,it)
+                binder.radioVehicleSpacePodTwo.text = resources.getString(R.string.space_pod,it)
+                binder.radioVehicleSpacePodThree.text = resources.getString(R.string.space_pod,it)
+                binder.radioVehicleSpacePodFour.text = resources.getString(R.string.space_pod,it)
+            }else{
+                resetVehicleTotal()
+            }
+        })
+
+        viewModel.spaceRocketCount.observe(viewLifecycleOwner, Observer {
+            if(it>0){
+                binder.radioVehicleSpaceRocket.text = resources.getString(R.string.space_rocket,it)
+                binder.radioVehicleSpaceRocketTwo.text = resources.getString(R.string.space_rocket,it)
+                binder.radioVehicleSpaceRocketThree.text = resources.getString(R.string.space_rocket,it)
+                binder.radioVehicleSpaceRocketFour.text = resources.getString(R.string.space_rocket,it)
+            }else{
+                resetVehicleTotal()
+            }
+        })
+
+        viewModel.spaceShuttleCount.observe(viewLifecycleOwner, Observer {
+            if(it>0){
+                binder.radioVehicleSpaceShuttle.text = resources.getString(R.string.space_shuttle,it)
+                binder.radioVehicleSpaceShuttleTwo.text = resources.getString(R.string.space_shuttle,it)
+                binder.radioVehicleSpaceShuttleThree.text = resources.getString(R.string.space_shuttle,it)
+                binder.radioVehicleSpaceShuttleFour.text = resources.getString(R.string.space_shuttle,it)
+
+                binder.radioVehicleSpaceShuttleThree.visibility = View.VISIBLE
+                binder.radioVehicleSpaceShuttleFour.visibility = View.VISIBLE
+            }else{
+
+                binder.radioVehicleSpaceShuttleThree.visibility = View.GONE
+                binder.radioVehicleSpaceShuttleFour.visibility = View.GONE
+            }
+        })
+
+
+        viewModel.spaceShipCount.observe(viewLifecycleOwner, Observer {
+            if(it>0){
+                binder.radioVehicleSpaceShip.text = resources.getString(R.string.space_ship,it)
+                binder.radioVehicleSpaceShipTwo.text = resources.getString(R.string.space_ship,it)
+                binder.radioVehicleSpaceShipThree.text = resources.getString(R.string.space_ship,it)
+                binder.radioVehicleSpaceShipFour.text = resources.getString(R.string.space_ship,it)
+            }else{
+
+            }
+        })
+    }
+
+    fun resetFragment() {
+        resetVehicleTotal()
+        (activity as MainActivity).recreate()
+
+
+    }
+
+    private fun resetVehicleTotal() {
+        for(size in viewModel.vehiclesDetailsList.value!!){
+        if (size.name.equals("Space pod")){
+            viewModel.spacePodCount.value =size.total_no
+        }else if(size.name.equals("Space rocket")) {
+            viewModel.spaceRocketCount.value =size.total_no
+        }
+        else if(size.name.equals("Space shuttle")) {
+            viewModel.spaceShuttleCount.value =size.total_no
+        }else {
+            viewModel.spaceShipCount.value = size.total_no
+        }
+        }
     }
 
     private fun findFalconeCheck() {
@@ -102,29 +191,46 @@ class SelectPlanetsFragment : Fragment() {
                 ::destinationFourVehicleDetails.isInitialized
             ) {
 
-                val planets : ArrayList<String> = ArrayList()
+                val planets: ArrayList<String> = ArrayList()
                 planets.add(destinationOnePlanetDetails.name)
                 planets.add(destinationTwoPlanetDetails.name)
                 planets.add(destinationThreePlanetDetails.name)
                 planets.add(destinationFourPlanetDetails.name)
 
-                val vehicles : ArrayList<String> = ArrayList()
+                val vehicles: ArrayList<String> = ArrayList()
                 vehicles.add(destinationOneVehicleDetails.name)
                 vehicles.add(destinationTwoVehicleDetails.name)
                 vehicles.add(destinationThreeVehicleDetails.name)
                 vehicles.add(destinationFourVehicleDetails.name)
-                val request = FindRequestBody(viewModel.token,planets,vehicles)
+                val request = FindRequestBody(viewModel.token, planets, vehicles)
 
                 viewModel.find(request).observe(viewLifecycleOwner, Observer {
-                    Log.d("TAG"," "+it)
+                    Log.d("TAG", " " + it)
                     it?.let { resource ->
-                        if (resource.status == Status.SUCCESS)
-                           Log.d("TAG"," "+it)
+                        if (resource.status == Status.SUCCESS) {
+                            Log.d("TAG", " " + it)
+                            (activity as MainActivity).replaceFragment(
+                                R.id.container,
+                                FindingFalconResultFragment(
+                                    resource.data?.status,
+                                    resource.data?.planet_name,
+                                    viewModel.totalTakenTime.value!!
+                                ),
+                                false
+                            )
+                        }
                     }
                 })
             }
         }
-   }
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("TAG", " orientation ")
+        outState.putInt("spinner1", viewModel.destinationOnePlanet.value!!)
+    }
 
     private fun radioGroupCheck() {
         binder.radioGroupDestinationOne.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
@@ -146,6 +252,7 @@ class SelectPlanetsFragment : Fragment() {
                         destinationOneVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(0)
 
+                        viewModel.spacePodCount.value = viewModel.spacePodCount.value?.minus(1)
 
                         addTotalTakenTime()
                     }
@@ -158,6 +265,7 @@ class SelectPlanetsFragment : Fragment() {
                         destinationOneVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(1)
                         addTotalTakenTime()
+                        viewModel.spaceRocketCount.value = viewModel.spaceRocketCount.value?.minus(1)
                     }
                     R.id.radio_vehicle_space_shuttle -> {
                         Log.d("TAG", " Space shuttle ")
@@ -168,6 +276,7 @@ class SelectPlanetsFragment : Fragment() {
                         destinationOneVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(2)
                         addTotalTakenTime()
+                        viewModel.spaceShuttleCount.value = viewModel.spaceShuttleCount.value?.minus(1)
                     }
                     R.id.radio_vehicle_space_ship -> {
                         Log.d("TAG", " Space ship ")
@@ -178,6 +287,7 @@ class SelectPlanetsFragment : Fragment() {
                         destinationOneVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(3)
                         addTotalTakenTime()
+                        viewModel.spaceShipCount.value = viewModel.spaceShipCount.value?.minus(1)
                     }
                 }
             }
@@ -193,12 +303,13 @@ class SelectPlanetsFragment : Fragment() {
                 when (checkedId) {
                     R.id.radio_vehicle_space_pod_two -> {
                         viewModel.totalTakenDestinationTwo =
-                                viewModel.planetsDetailsListTwo.value!!.get(viewModel.destinationTwoPlanet.value!! - 1).distance / 2
+                            viewModel.planetsDetailsListTwo.value!!.get(viewModel.destinationTwoPlanet.value!! - 1).distance / 2
                         destinationTwoPlanetDetails =
                             viewModel.planetsDetailsListTwo.value!!.get(viewModel.destinationTwoPlanet.value!! - 1)
                         destinationTwoVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(0)
                         addTotalTakenTime()
+                        viewModel.spacePodCount.value = viewModel.spacePodCount.value?.minus(1)
                     }
                     R.id.radio_vehicle_space_rocket_two -> {
                         Log.d("TAG", " Space rocket ")
@@ -208,6 +319,7 @@ class SelectPlanetsFragment : Fragment() {
                             viewModel.planetsDetailsListTwo.value!!.get(viewModel.destinationTwoPlanet.value!! - 1)
                         destinationTwoVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(1)
+                        viewModel.spaceRocketCount.value = viewModel.spaceRocketCount.value?.minus(1)
                         addTotalTakenTime()
                     }
                     R.id.radio_vehicle_space_shuttle_two -> {
@@ -218,8 +330,9 @@ class SelectPlanetsFragment : Fragment() {
                             viewModel.planetsDetailsListTwo.value!!.get(viewModel.destinationTwoPlanet.value!! - 1)
                         destinationTwoVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(2)
-                        viewModel.totalTakenTime.value=  viewModel.totalTakenDestinationOne + viewModel.totalTakenDestinationTwo+viewModel.totalTakenDestinationThree+viewModel.totalTakenDestinationFour
-                        binder.txtTotalTakenTitle.text = "Total taken :"+viewModel.totalTakenTime.value
+
+                        addTotalTakenTime()
+                        viewModel.spaceShuttleCount.value = viewModel.spaceShuttleCount.value?.minus(1)
                     }
                     R.id.radio_vehicle_space_ship_two -> {
                         Log.d("TAG", " Space ship ")
@@ -229,6 +342,7 @@ class SelectPlanetsFragment : Fragment() {
                             viewModel.planetsDetailsListTwo.value!!.get(viewModel.destinationTwoPlanet.value!! - 1)
                         destinationTwoVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(3)
+                        viewModel.spaceShipCount.value = viewModel.spaceShipCount.value?.minus(1)
                         addTotalTakenTime()
                     }
                 }
@@ -245,11 +359,12 @@ class SelectPlanetsFragment : Fragment() {
                 when (checkedId) {
                     R.id.radio_vehicle_space_pod_three -> {
                         viewModel.totalTakenDestinationThree =
-                                viewModel.planetsDetailsListThree.value!!.get(viewModel.destinationThreePlanet.value!! - 1).distance / 2
+                            viewModel.planetsDetailsListThree.value!!.get(viewModel.destinationThreePlanet.value!! - 1).distance / 2
                         destinationThreePlanetDetails =
                             viewModel.planetsDetailsListThree.value!!.get(viewModel.destinationThreePlanet.value!! - 1)
                         destinationThreeVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(0)
+                        viewModel.spacePodCount.value = viewModel.spacePodCount.value?.minus(1)
                         addTotalTakenTime()
                     }
                     R.id.radio_vehicle_space_rocket_three -> {
@@ -260,6 +375,7 @@ class SelectPlanetsFragment : Fragment() {
                             viewModel.planetsDetailsListThree.value!!.get(viewModel.destinationThreePlanet.value!! - 1)
                         destinationThreeVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(1)
+                        viewModel.spaceRocketCount.value = viewModel.spaceRocketCount.value?.minus(1)
                         addTotalTakenTime()
                     }
                     R.id.radio_vehicle_space_shuttle_three -> {
@@ -270,16 +386,21 @@ class SelectPlanetsFragment : Fragment() {
                             viewModel.planetsDetailsListThree.value!!.get(viewModel.destinationThreePlanet.value!! - 1)
                         destinationThreeVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(2)
+                        viewModel.spaceShuttleCount.value = viewModel.spaceShuttleCount.value?.minus(1)
                         addTotalTakenTime()
                     }
                     R.id.radio_vehicle_space_ship_three -> {
-                        Log.d("TAG", " Space ship "+ viewModel.planetsDetailsListThree.value+" "+viewModel.destinationTwoPlanet.value)
-                        viewModel.totalTakenDestinationThree=
+                        Log.d(
+                            "TAG",
+                            " Space ship " + viewModel.planetsDetailsListThree.value + " " + viewModel.destinationTwoPlanet.value
+                        )
+                        viewModel.totalTakenDestinationThree =
                             viewModel.planetsDetailsListThree.value!!.get(viewModel.destinationThreePlanet.value!! - 1).distance / 10
                         destinationThreePlanetDetails =
                             viewModel.planetsDetailsListThree.value!!.get(viewModel.destinationThreePlanet.value!! - 1)
                         destinationThreeVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(3)
+                        viewModel.spaceShipCount.value = viewModel.spaceShipCount.value?.minus(1)
                         addTotalTakenTime()
                     }
                 }
@@ -292,46 +413,48 @@ class SelectPlanetsFragment : Fragment() {
             } else {
 
 
-
                 when (checkedId) {
                     R.id.radio_vehicle_space_pod_four -> {
                         viewModel.totalTakenDestinationFour =
-                                viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1).distance / 2
+                            viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1).distance / 2
                         destinationFourPlanetDetails =
                             viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1)
                         destinationFourVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(0)
+                        viewModel.spacePodCount.value = viewModel.spacePodCount.value?.minus(1)
                         addTotalTakenTime()
                     }
                     R.id.radio_vehicle_space_rocket_four -> {
                         Log.d("TAG", " Space rocket ")
-                        viewModel.totalTakenDestinationFour=
-                                viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1).distance / 4
+                        viewModel.totalTakenDestinationFour =
+                            viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1).distance / 4
                         destinationFourPlanetDetails =
                             viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1)
                         destinationFourVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(1)
-                        viewModel.totalTakenTime.value=  viewModel.totalTakenDestinationOne + viewModel.totalTakenDestinationTwo+viewModel.totalTakenDestinationThree+viewModel.totalTakenDestinationFour
-                        binder.txtTotalTakenTitle.text = "Total taken :"+viewModel.totalTakenTime.value
+                       addTotalTakenTime()
+                        viewModel.spaceRocketCount.value = viewModel.spaceRocketCount.value?.minus(1)
                     }
                     R.id.radio_vehicle_space_shuttle_four -> {
                         Log.d("TAG", " Space shuttle ")
                         viewModel.totalTakenDestinationFour =
-                                viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1).distance / 5
+                            viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1).distance / 5
                         destinationFourPlanetDetails =
                             viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1)
                         destinationFourVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(2)
+                        viewModel.spaceShuttleCount.value = viewModel.spaceShuttleCount.value?.minus(1)
                         addTotalTakenTime()
                     }
                     R.id.radio_vehicle_space_ship_four -> {
                         Log.d("TAG", " Space ship ")
                         viewModel.totalTakenDestinationFour =
-                                viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1).distance / 10
+                            viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1).distance / 10
                         destinationFourPlanetDetails =
                             viewModel.planetsDetailsListFour.value!!.get(viewModel.destinationFourPlanet.value!! - 1)
                         destinationFourVehicleDetails =
                             viewModel.vehiclesDetailsList.value!!.get(3)
+                        viewModel.spaceShipCount.value = viewModel.spaceShipCount.value?.minus(1)
                         addTotalTakenTime()
                     }
                 }
@@ -358,8 +481,12 @@ class SelectPlanetsFragment : Fragment() {
                     viewModel.destinationOnePlanet.value = position
 
                     if (position > 0) {
+                        //  binder.radioGroupDestinationOne.visibility = View.VISIBLE
                         spinnerListTwo = ArrayList()
                         val planetDetailsTwo: ArrayList<Planets> = ArrayList()
+                        if (binder.radioGroupDestinationOne.visibility == View.GONE)
+                            binder.radioGroupDestinationOne.visibility = View.VISIBLE
+
                         for (size in viewModel.planetsDetailsList.value!!) {
                             if (size == viewModel.planetsDetailsList.value!!.get(viewModel.destinationOnePlanet.value!! - 1)) {
 
@@ -372,13 +499,15 @@ class SelectPlanetsFragment : Fragment() {
                         for (planet in viewModel.planetsDetailsListTwo.value!!) {
                             spinnerListTwo.add(SpinnerItem(planet.name))
                         }
-                    }else{
+                        binder.appCompatImageView.setImageResource(Utils.getImageId(viewModel.planetsDetailsList.value!!.get(position-1).name))
+                    } else {
                         viewModel.totalTakenDestinationOne = 0
                         addTotalTakenTime()
                         spinnerListTwo = ArrayList()
                         spinnerListTwo.add(SpinnerItem("Select"))
                         val adapter = SpinnerAdapter(requireContext(), 2, spinnerListTwo)
                         binder.spinerPlanetTwo.adapter = adapter
+                        binder.appCompatImageView.setImageResource(Utils.getImageId(""))
                     }
                 }
 
@@ -401,6 +530,8 @@ class SelectPlanetsFragment : Fragment() {
 
                     if (position > 0) {
                         spinnerListThree = ArrayList()
+                        if (binder.radioGroupDestinationTwo.visibility == View.GONE)
+                            binder.radioGroupDestinationTwo.visibility = View.VISIBLE
                         val planetDetailsThree: ArrayList<Planets> = ArrayList()
                         for (size in viewModel.planetsDetailsListTwo.value!!) {
                             if (size == viewModel.planetsDetailsListTwo.value!!.get(viewModel.destinationTwoPlanet.value!! - 1)) {
@@ -414,13 +545,16 @@ class SelectPlanetsFragment : Fragment() {
                         for (planet in viewModel.planetsDetailsListThree.value!!) {
                             spinnerListThree.add(SpinnerItem(planet.name))
                         }
-                    }else{
+                        binder.imgPlanetTwo.setImageResource(Utils.getImageId(viewModel.planetsDetailsListTwo.value!!.get(position-1).name))
+
+                    } else {
                         viewModel.totalTakenDestinationTwo = 0
                         addTotalTakenTime()
                         spinnerListThree = ArrayList()
                         spinnerListThree.add(SpinnerItem("Select"))
                         val adapter = SpinnerAdapter(requireContext(), 3, spinnerListThree)
                         binder.spinerPlanetThree.adapter = adapter
+                        binder.imgPlanetTwo.setImageResource(Utils.getImageId(""))
                     }
                 }
 
@@ -444,6 +578,8 @@ class SelectPlanetsFragment : Fragment() {
 
                     if (position > 0) {
                         spinnerListFour = ArrayList()
+                        if(binder.radioGroupDestinationThree.visibility == View.GONE)
+                          binder.radioGroupDestinationThree.visibility = View.VISIBLE
                         val planetDetailsFour: ArrayList<Planets> = ArrayList()
                         for (size in viewModel.planetsDetailsListThree.value!!) {
                             if (size == viewModel.planetsDetailsListThree.value!!.get(viewModel.destinationTwoPlanet.value!! - 1)) {
@@ -457,13 +593,16 @@ class SelectPlanetsFragment : Fragment() {
                         for (planet in viewModel.planetsDetailsListFour.value!!) {
                             spinnerListFour.add(SpinnerItem(planet.name))
                         }
-                    }else{
+                        binder.imgPlanetThree.setImageResource(Utils.getImageId(viewModel.planetsDetailsListThree.value!!.get(position-1).name))
+
+                    } else {
                         viewModel.totalTakenDestinationThree = 0
                         addTotalTakenTime()
                         spinnerListFour = ArrayList()
                         spinnerListFour.add(SpinnerItem("Select"))
                         val adapter = SpinnerAdapter(requireContext(), 4, spinnerListFour)
                         binder.spinerPlanetFour.adapter = adapter
+                        binder.imgPlanetThree.setImageResource(Utils.getImageId(""))
                     }
                 }
 
@@ -481,8 +620,18 @@ class SelectPlanetsFragment : Fragment() {
                     id: Long
                 ) {
                     Log.d("TAG", " p2 " + position + " p3 " + id)
-                    binder.radioGroupDestinationFour.clearCheck()
-                    viewModel.destinationFourPlanet.value = position
+                    if(position>0) {
+                        if (binder.radioGroupDestinationFour.visibility == View.GONE)
+                            binder.radioGroupDestinationFour.visibility = View.VISIBLE
+                        binder.radioGroupDestinationFour.clearCheck()
+                        viewModel.destinationFourPlanet.value = position
+                        binder.imgPlanetFour.setImageResource(Utils.getImageId(viewModel.planetsDetailsListThree.value!!.get(position).name))
+
+                    }else{
+                        viewModel.totalTakenDestinationThree = 0
+                        addTotalTakenTime()
+                        binder.imgPlanetFour.setImageResource(Utils.getImageId(""))
+                    }
                 }
 
             }
@@ -496,6 +645,7 @@ class SelectPlanetsFragment : Fragment() {
 
 
     private fun initialDetails() {
+
         viewModel.getUsers().observe(viewLifecycleOwner, Observer {
             it?.let { resource ->
                 if (resource.status == Status.SUCCESS)
@@ -522,6 +672,16 @@ class SelectPlanetsFragment : Fragment() {
                     val vehicleDetails: ArrayList<Vehicles> = ArrayList()
                     for (size in resource.data!!) {
                         vehicleDetails.add(size)
+                        if (size.name.equals("Space pod")){
+                            viewModel.spacePodCount.value =size.total_no
+                        }else if(size.name.equals("Space rocket")) {
+                            viewModel.spaceRocketCount.value =size.total_no
+                        }
+                        else if(size.name.equals("Space shuttle")) {
+                            viewModel.spaceShuttleCount.value =size.total_no
+                        }else{
+                            viewModel.spaceShipCount.value =size.total_no
+                        }
                     }
                     viewModel.vehiclesDetailsList.value = vehicleDetails
                 }
@@ -630,11 +790,11 @@ class SelectPlanetsFragment : Fragment() {
     }
 
 
-    fun addTotalTakenTime(){
-        viewModel.totalTakenTime.value=  viewModel.totalTakenDestinationOne + viewModel.totalTakenDestinationTwo+viewModel.totalTakenDestinationThree+viewModel.totalTakenDestinationFour
-        binder.txtTotalTakenTitle.text = "Total taken :"+viewModel.totalTakenTime.value
+    fun addTotalTakenTime() {
+        viewModel.totalTakenTime.value =
+            viewModel.totalTakenDestinationOne + viewModel.totalTakenDestinationTwo + viewModel.totalTakenDestinationThree + viewModel.totalTakenDestinationFour
+        binder.txtTotalTakenTitle.text = "Total taken :" + viewModel.totalTakenTime.value
     }
-
 
 
 }

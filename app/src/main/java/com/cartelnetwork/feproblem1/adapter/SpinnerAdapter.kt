@@ -1,6 +1,7 @@
 package com.cartelnetwork.feproblem1.adapter
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.cartelnetwork.feproblem1.R
+import com.cartelnetwork.feproblem1.utils.Utils
 
 
 class SpinnerAdapter(val context: Context,val resource: Int,val list: ArrayList<SpinnerItem>) :
@@ -40,7 +42,9 @@ class SpinnerAdapter(val context: Context,val resource: Int,val list: ArrayList<
         vh.label.text = list.get(p0).planetName
 
 
-       // vh.img.setBackgroundResource(id)
+
+
+        vh.img.setImageResource(Utils.getImageId(list.get(p0).planetName))
 
         return view
     }
@@ -53,4 +57,5 @@ class SpinnerAdapter(val context: Context,val resource: Int,val list: ArrayList<
             img = row?.findViewById(R.id.img_spinner) as ImageView
         }
     }
+
 }
